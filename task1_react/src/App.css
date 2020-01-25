@@ -1,11 +1,15 @@
 .App {
+  margin-top: 3rem;
   text-align: center;
+  color: #606060;
 }
 
-input {
+.input-item {
   border: 1px solid #999;
+  border-radius: 0.3rem;
   padding: 0.5rem;
   width: 300px;
+  text-align: center;
 }
 
 .no-suggestions {
@@ -17,11 +21,11 @@ input {
   border: 1px solid #999;
   border-top-width: 0;
   list-style: none;
-  margin-top: 0;
   max-height: 143px;
   overflow-y: auto;
   padding-left: 0;
-  width: calc(300px + 1rem);
+  width: 300px;
+  margin: 0 auto;
 }
 
 .suggestions li {
@@ -30,12 +34,29 @@ input {
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: #008f68;
-  color: #fae042;
+  background-color: grey;
+  color: white;
   cursor: pointer;
   font-weight: 700;
 }
 
 .suggestions li:not(:last-of-type) {
   border-bottom: 1px solid #999;
+}
+
+.suggestion-container {
+  margin: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.movie-item {
+  margin: 2rem;
+  width: 250px;
+}
+
+.search-title {
+  padding: 1rem 0;
 }

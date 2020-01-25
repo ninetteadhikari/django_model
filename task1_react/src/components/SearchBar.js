@@ -104,14 +104,19 @@ class SearchBar extends Component {
 
     return (
       <div>
+        <h3 className='search-title'>Search for your favorite movies</h3>
         <input
+          className='input-item'
           type='text'
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={userInput}
+          placeholder='Type movie names here'
         />
         {suggestionsListComponent}
-        <MovieList userInput={userInput} movieList={this.props.movieList}/>
+        <div className='suggestion-container'>
+          <MovieList userInput={userInput} movieList={this.props.movieList} />
+        </div>
       </div>
     );
   }
