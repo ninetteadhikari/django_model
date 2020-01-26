@@ -26,8 +26,6 @@ class App extends Component {
     });
     return (
       <div className='App'>
-        {console.log('state data', this.state.movieList)}
-        {console.log('name list', nameList)}
         <h1>Movie Listing</h1>
         <SearchBar suggestions={nameList} movieList={this.state.movieList}/>
         

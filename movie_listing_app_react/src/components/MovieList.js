@@ -3,16 +3,11 @@ import React, { Component } from 'react';
 export default class MovieList extends Component {
   render() {
     let selectedMovie;
-
-    if (this.props.userInput) {
       selectedMovie = this.props.movieList.filter(data => {
         return data.original_title
           .toLowerCase()
           .includes(this.props.userInput.toLowerCase());
       });
-    } else {
-      selectedMovie = this.props.movieList;
-    }
 
     return (
       <>
