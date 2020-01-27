@@ -4,8 +4,8 @@ from django.db import models
 class Groups (models.Model):
     group_name = models.CharField(max_length=100)
     description= models.TextField()
-    cover_photo=models.ImageField()
-    icon=models.ImageField()
+    cover_photo=models.ImageField(upload_to='coverphoto')
+    icon=models.ImageField(upload_to='iconphoto')
     member_count=models.IntegerField()
     users = models.ManyToManyField('models.Users',blank=True)
 
@@ -20,7 +20,7 @@ class Users (models.Model):
     birthday=models.DateField()
     email= models.EmailField()
     relationship_status=models.CharField(max_length=50)
-    profile_picture=models.ImageField()
+    profile_picture=models.ImageField(upload_to='profilephoto')
     friends=models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
     created_date=models.DateTimeField()
     
@@ -28,7 +28,7 @@ class Users (models.Model):
         return self.name
 
 class Photos (models.Model):
-    group_photos=models.ImageField()
+    group_photos=models.ImageField(upload_to='photos')
     group=models.ForeignKey(Groups,blank=True, on_delete=models.CASCADE)
     user=models.ForeignKey(Users, blank=True, null=True, on_delete=models.SET_NULL)
 
