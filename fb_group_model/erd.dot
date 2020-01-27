@@ -1,6 +1,6 @@
 digraph model_graph {
   // Dotfile by Django-Extensions graph_models
-  // Created: 2020-01-27 12:23
+  // Created: 2020-01-27 20:45
   // Cli Options: -a
 
   fontname = "Roboto"
@@ -305,6 +305,14 @@ digraph model_graph {
     
     
       <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>comments</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
       <FONT FACE="Roboto"><B>post</B></FONT>
       </TD><TD ALIGN="LEFT">
       <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
@@ -355,41 +363,7 @@ digraph model_graph {
     
     
       <TR><TD ALIGN="LEFT" BORDER="0">
-      <FONT FACE="Roboto">comment_description</FONT>
-      </TD><TD ALIGN="LEFT">
-      <FONT FACE="Roboto">TextField</FONT>
-      </TD></TR>
-    
-    
-    
-      <TR><TD ALIGN="LEFT" BORDER="0">
-      <FONT FACE="Roboto">created_date</FONT>
-      </TD><TD ALIGN="LEFT">
-      <FONT FACE="Roboto">DateTimeField</FONT>
-      </TD></TR>
-    
-    
-      </TABLE>
-      >]
-  
-    models_models_Replies [label=<
-      <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
-      <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
-      <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
-      Replies
-      </B></FONT></TD></TR>
-    
-    
-      <TR><TD ALIGN="LEFT" BORDER="0">
-      <FONT FACE="Roboto"><B>id</B></FONT>
-      </TD><TD ALIGN="LEFT">
-      <FONT FACE="Roboto"><B>AutoField</B></FONT>
-      </TD></TR>
-    
-    
-    
-      <TR><TD ALIGN="LEFT" BORDER="0">
-      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>comment</B></FONT>
+      <FONT COLOR="#7B7B7B" FACE="Roboto"><B>reply</B></FONT>
       </TD><TD ALIGN="LEFT">
       <FONT COLOR="#7B7B7B" FACE="Roboto"><B>ForeignKey (id)</B></FONT>
       </TD></TR>
@@ -397,6 +371,14 @@ digraph model_graph {
     
     
       <TR><TD ALIGN="LEFT" BORDER="0">
+      <FONT FACE="Roboto"><B>user</B></FONT>
+      </TD><TD ALIGN="LEFT">
+      <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
+      </TD></TR>
+    
+    
+    
+      <TR><TD ALIGN="LEFT" BORDER="0">
       <FONT FACE="Roboto">created_date</FONT>
       </TD><TD ALIGN="LEFT">
       <FONT FACE="Roboto">DateTimeField</FONT>
@@ -405,7 +387,7 @@ digraph model_graph {
     
     
       <TR><TD ALIGN="LEFT" BORDER="0">
-      <FONT FACE="Roboto">reply_description</FONT>
+      <FONT FACE="Roboto">description</FONT>
       </TD><TD ALIGN="LEFT">
       <FONT FACE="Roboto">TextField</FONT>
       </TD></TR>
@@ -900,7 +882,7 @@ digraph model_graph {
   // Relations
 
   models_models_Groups -> models_models_Users
-  [label=" users (groups)"] [arrowhead=dot arrowtail=dot, dir=both];
+  [label=" members (groups)"] [arrowhead=dot arrowtail=dot, dir=both];
 
   models_models_Users -> models_models_Users
   [label=" friends (users)"] [arrowhead=none, arrowtail=dot, dir=both];
@@ -920,14 +902,20 @@ digraph model_graph {
   models_models_Likes -> models_models_Posts
   [label=" post (likes)"] [arrowhead=none, arrowtail=dot, dir=both];
 
+  models_models_Likes -> models_models_Comments
+  [label=" comments (likes)"] [arrowhead=none, arrowtail=dot, dir=both];
+
   models_models_Likes -> models_models_Users
   [label=" user (likes)"] [arrowhead=none, arrowtail=dot, dir=both];
 
   models_models_Comments -> models_models_Posts
   [label=" post (comments)"] [arrowhead=none, arrowtail=dot, dir=both];
 
-  models_models_Replies -> models_models_Comments
-  [label=" comment (replies)"] [arrowhead=none, arrowtail=dot, dir=both];
+  models_models_Comments -> models_models_Users
+  [label=" user (comments)"] [arrowhead=none, arrowtail=dot, dir=both];
+
+  models_models_Comments -> models_models_Comments
+  [label=" reply (comments)"] [arrowhead=none, arrowtail=dot, dir=both];
 
 
   django_contrib_admin_models_LogEntry -> django_contrib_auth_models_User
