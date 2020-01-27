@@ -1,14 +1,13 @@
 from django.db import models
 
+
 class Groups (models.Model):
     group_name = models.CharField(max_length=100)
     description= models.TextField()
-    cover=models.ImageField()
+    cover_photo=models.ImageField()
     icon=models.ImageField()
     member_count=models.IntegerField()
-    permissions=models.CharField()
-    privacy=models.TextField()
-    users = models.ManyToManyField('task2_django.Users',blank=True)
+    users = models.ManyToManyField('models.Users',blank=True)
 
     def __str__(self):
         return self.group_name
@@ -19,10 +18,9 @@ class Users (models.Model):
     address=models.TextField()
     gender=models.CharField(max_length=50)
     birthday=models.DateField()
-    email= models.CharField(max_length=50)
+    email= models.EmailField()
     relationship_status=models.CharField(max_length=50)
-    picture=models.ImageField()
-    password=models.TextField()
+    profile_picture=models.ImageField()
     friends=models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
     created_date=models.DateTimeField()
     
@@ -30,11 +28,12 @@ class Users (models.Model):
         return self.name
 
 class Photos (models.Model):
-    photo_url=models.ImageField()
-    user=models.ForeignKey(Users, blank=True, on_delete=models.CASCADE)
+    group_photos=models.ImageField()
+    group=models.ForeignKey(Groups,blank=True, on_delete=models.CASCADE)
+    user=models.ForeignKey(Users, blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.photo_url
+        return self.group_photos
 
 class Posts (models.Model):
     post_description=models.TextField()
