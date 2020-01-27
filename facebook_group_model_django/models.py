@@ -1,8 +1,5 @@
 from django.db import models
 
-
-# questions: how to add enums, how to add arrays, difference between text and charfield, add location
-
 class Groups (models.Model):
     group_name = models.CharField(max_length=100)
     description= models.TextField()
@@ -22,17 +19,54 @@ class Users (models.Model):
     address=models.TextField()
     gender=models.CharField(max_length=50)
     birthday=models.DateField()
+    email= models.CharField(max_length=50)
+    relationship_status=models.CharField(max_length=50)
+    picture=models.ImageField()
+    password=models.TextField()
+    friends=models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
+    created_date=models.DateTimeField()
     
     def __str__(self):
         return self.name
 
+class Photos (models.Model):
+    photo_url=models.ImageField()
+    user=models.ForeignKey(Users, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.photo_url
+
 class Posts (models.Model):
+    post_description=models.TextField()
+    likes_count=models.IntegerField()
+    created_date=models.DateTimeField()
     group=models.ForeignKey(Groups,blank=True,null=True, on_delete=models.SET_NULL)
-    # another on_delete option is called SET_DEFAULT
-    user=models.ForeignKey(Users, default=1, on_delete=models.CASCADE)
+    user=models.ForeignKey(Users, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.post_description
 
-# class Comments (models.Model):
-# class Replies (models.Model):
+class Likes (models.Model):
+    likes=models.BooleanField()
+    post=models.ForeignKey(Posts, on_delete=models.CASCADE)
+    user=models.ForeignKey(Users, null=True,on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.likes
+
+class Comments (models.Model):
+    comment_description=models.TextField()
+    created_date=models.DateTimeField()
+    post=models.ForeignKey(Posts, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.comment_description
+
+
+class Replies (models.Model):
+    reply_description=models.TextField()
+    created_date=models.DateTimeField()
+    comment=models.ForeignKey(Comments,blank=True,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.reply_description
