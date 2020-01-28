@@ -1,18 +1,26 @@
 from django.db import models
 
 
-class Groups (models.Model):
+class Group (models.Model):
     group_name = models.CharField(max_length=100)
     description= models.TextField()
     cover_photo=models.ImageField(upload_to='coverphoto')
     icon=models.ImageField(upload_to='iconphoto')
     member_count=models.IntegerField()
-    members = models.ManyToManyField('models.Users',blank=True)
+    # members = models.ManyToManyField('models.User',blank=True)
 
     def __str__(self):
         return self.group_name
 
-class Users (models.Model):
+class GroupUser (models.Model):
+    user=models.ForeignKey('models.User', null=True, on_delete=models.SET_NULL)
+    group=models.ForeignKey(Group, on_delete=models.CASCADE)
+    join_date=models.DateTimeField()
+
+def __str__(self):
+        return self.user
+
+class User (models.Model):
     name=models.CharField(max_length=100)
     about=models.TextField()
     address=models.TextField()
@@ -27,39 +35,41 @@ class Users (models.Model):
     def __str__(self):
         return self.name
 
-class Photos (models.Model):
+class Photo (models.Model):
     group_photos=models.ImageField(upload_to='photos')
-    group=models.ForeignKey(Groups,blank=True, on_delete=models.CASCADE)
-    user=models.ForeignKey(Users, blank=True, null=True, on_delete=models.SET_NULL)
+    group=models.ForeignKey(Group,blank=True, on_delete=models.CASCADE)
+    user=models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.group_photos
 
-class Posts (models.Model):
+class Post (models.Model):
     post_description=models.TextField()
     likes_count=models.IntegerField()
     created_date=models.DateTimeField()
-    group=models.ForeignKey(Groups,blank=True,null=True, on_delete=models.SET_NULL)
-    user=models.ForeignKey(Users, on_delete=models.CASCADE)
+    group=models.ForeignKey(Group, blank=True,null=True, on_delete=models.SET_NULL)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    comment=models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
+    reply=models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
     
     def __str__(self):
         return self.post_description
 
-class Likes (models.Model):
+class Like (models.Model):
     likes=models.BooleanField()
-    post=models.ForeignKey(Posts, on_delete=models.CASCADE)
-    comments=models.ForeignKey('models.Comments', on_delete=models.CASCADE)
-    user=models.ForeignKey(Users, null=True,on_delete=models.SET_NULL)
+    post=models.ForeignKey(Post, on_delete=models.CASCADE)
+    user=models.ForeignKey(User, null=True,on_delete=models.SET_NULL)
+    # comments=models.ForeignKey('models.Comment', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.likes
 
-class Comments (models.Model):
-    description=models.TextField()
-    created_date=models.DateTimeField()
-    post=models.ForeignKey(Posts, blank=True, on_delete=models.CASCADE)
-    user=models.ForeignKey(Users, null=True, on_delete=models.SET_NULL)
-    reply=models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
+# class Comment (models.Model):
+#     description=models.TextField()
+#     created_date=models.DateTimeField()
+#     post=models.ForeignKey(Posts, blank=True, on_delete=models.CASCADE)
+#     user=models.ForeignKey(Users, null=True, on_delete=models.SET_NULL)
+#     reply=models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
 
-    def __str__(self):
-        return self.description
+#     def __str__(self):
+#         return self.description

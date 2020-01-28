@@ -28,6 +28,7 @@ python manage.py migrate
 Remove existing erd.dot and erd.png files and install pyparsing and pydot
 
 ```bash
+pip3 install django-extensions
 pip3 install pyparsing pydot
 ```
 In the app directory run the following:
